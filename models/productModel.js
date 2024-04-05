@@ -1,7 +1,7 @@
 const Product = require('../schemas/productSchema.js')
 
 const createProduct = async () => {
-
+    
 }
 
 const getAllProducts = async () => {
