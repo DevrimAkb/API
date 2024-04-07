@@ -1,21 +1,42 @@
 const Product = require('../schemas/productSchema.js')
 
-const createProduct = async () => {
-    
+exports.createProduct = async (req, res) => {
+    try {
+        const newProduct = {
+            name: name,
+            price: price,
+            description: description,
+            category: category,
+            images: images 
+        } = req.body
+        if(!name || !price || !description || !category || !images) {
+            res.status(400).json({ message: 'You need to enter all fields'})
+        }
+
+        Product.create({ name, price, description, category, images })
+        .then(product => {
+            res.status(201).json(product)
+        })
+        
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ message: 'Something went wrong!'})
+    }
 }
 
-const getAllProducts = async () => {
+exports.getAllProducts = async (req, res) => {
+    res.status(200).json({ message: 'Get all products '})
+}
+
+exports.getProductById = async (req, res) => {
 
 }
 
-const getProductById = async () => {
+exports.updateProduct = async (req, res) => {
+    res.status(200).json({ message: 'Update product'})
 
 }
 
-const updateProduct = async () => {
-
-}
-
-const deleteProduct = async () => {
-
+exports.deleteProduct = async (req, res) => {
+    res.status(200).json({ message: 'Delete product'})
 }
