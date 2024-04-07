@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 const productSchema = mongoose.Schema({
-    name: {
+    productName: {
         type: String,
         required: [true, 'You need to enter a product name']
     },
@@ -20,7 +20,8 @@ const productSchema = mongoose.Schema({
     },
     images: {
         type: [String],
-        required: [true, 'You need atleast one image']
+        required: [false]
+        // required: [true, 'You need atleast one image']
     }
 }, { timestamps: true })
 

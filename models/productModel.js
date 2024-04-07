@@ -1,19 +1,20 @@
 const Product = require('../schemas/productSchema.js')
 
 exports.createProduct = async (req, res) => {
+    //Lägg till images i newProduct, if satsen, och Product.create
     try {
         const newProduct = {
-            name: name,
+            productName: productName,
             price: price,
             description: description,
             category: category,
             images: images 
         } = req.body
-        if(!name || !price || !description || !category || !images) {
+        if(!productName || !price || !description || !category || !images) {
             res.status(400).json({ message: 'You need to enter all fields'})
         }
 
-        Product.create({ name, price, description, category, images })
+        Product.create({ productName, price, description, category, images })
         .then(product => {
             res.status(201).json(product)
         })
