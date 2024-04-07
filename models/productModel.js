@@ -1,7 +1,6 @@
 const Product = require('../schemas/productSchema.js')
 
 exports.createProduct = async (req, res) => {
-    //Lägg till images i newProduct, if satsen, och Product.create
     try {
         const newProduct = {
             productName: productName,
@@ -26,7 +25,16 @@ exports.createProduct = async (req, res) => {
 }
 
 exports.getAllProducts = async (req, res) => {
-    res.status(200).json({ message: 'Get all products '})
+    // res.status(200).json({ message: 'Get all products '})
+
+    try {
+        Product.find()
+        .then(data => {
+            res.status(200).json(data)
+        })
+    } catch (err) {
+        res.json({message: err.message})
+    }
 }
 
 exports.getProductById = async (req, res) => {
