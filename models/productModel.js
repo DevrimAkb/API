@@ -76,5 +76,22 @@ exports.updateProduct = async (req, res) => {
 }
 
 exports.deleteProduct = async (req, res) => {
-    res.status(200).json({ message: 'Delete product'})
+    // res.status(200).json({ message: 'Delete product'})
+    try {
+        const id = req.params.id
+        if(!mongoose.isValidObjectId(id)) {
+            res.status(400)
+            throw new Error('You need to enter a valid product id')
+        }
+
+        const product = await Product.findByIdAndDelete(id)
+
+        if(!product) {
+            res.status(404)
+            throw new Error('Product not found')
+        }
+        res.status(200).json( product._id)
+    } catch (err) {
+        res.json({ message: err.message })
+    }
 }
