@@ -1,4 +1,5 @@
 const Product = require('../schemas/productSchema.js')
+const mongoose = require('mongoose')
 
 exports.createProduct = async (req, res) => {
     try {
@@ -29,8 +30,8 @@ exports.getAllProducts = async (req, res) => {
 
     try {
         Product.find()
-        .then(data => {
-            res.status(200).json(data)
+        .then(product => {
+            res.status(200).json(product)
         })
     } catch (err) {
         res.json({message: err.message})
@@ -38,7 +39,16 @@ exports.getAllProducts = async (req, res) => {
 }
 
 exports.getProductById = async (req, res) => {
-
+    if(!mongoose.isValidObjectId(req.params.id)) {
+        return res.status(400).json({ message: 'Object ID is not registered'})
+    }
+    Product.findById(req.params.id)
+    .then(product => {
+        if(!product) {
+            return res.status(404).json({ message: 'Not found'})
+        }
+        res.status(200).json(product)
+    })
 }
 
 exports.updateProduct = async (req, res) => {
