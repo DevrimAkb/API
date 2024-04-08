@@ -52,7 +52,26 @@ exports.getProductById = async (req, res) => {
 }
 
 exports.updateProduct = async (req, res) => {
-    res.status(200).json({ message: 'Update product'})
+    // res.status(200).json({ message: 'Update product'})
+
+    try {
+        const id = req.params.id
+        if(!mongoose.isValidObjectId(id)) {
+            res.status(400)
+            throw new Error('You need to enter a valid product id')
+        }
+        const product =  await Product.findByIdAndUpdate(id, req.body, { new: true } )
+
+        if(!product) {
+            res.status(404)
+            throw new Error('Product not found')
+        }
+        
+        res.status(200).json(product)
+        
+    } catch (err) {
+        res.json({ message: err.message })
+    }
 
 }
 
