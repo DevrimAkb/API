@@ -16,12 +16,12 @@ exports.createProduct = async (req, res) => {
 
         Product.create({ productName, price, description, category, images })
         .then(product => {
-            res.status(201).json(product)
+            res.status(200).json(product)
         })
         
     } catch (err) {
         console.log(err.message)
-        res.status(500).json({ message: 'Something went wrong!'})
+        res.status(400).json({ message: 'Something went wrong!'})
     }
 }
 
